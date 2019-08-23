@@ -6,8 +6,11 @@ import mongoose from 'mongoose'
 import typeDefs from './graphql/schema'
 import resolvers from './graphql/resolvers'
 
-mongoose.connect(process.env.DATABASE,
-  { useCreateIndex: true, useNewUrlParser: true })
+mongoose.connect(process.env.DATABASE,{ 
+  useCreateIndex: true, 
+  useNewUrlParser: true,
+  useFindAndModify: false
+})
 
 const mongoDB = mongoose.connection
 
