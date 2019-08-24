@@ -1,6 +1,13 @@
 import { gql } from 'apollo-server'
 
 const typesDefs = gql`
+  directive @AuthDirective on QUERY | FIELD_DEFINITION | FIELD
+
+  enum Gender {
+    Hombre
+    Mujer
+  }
+
   type Book {
     title: String,
     author: String
@@ -20,9 +27,13 @@ const typesDefs = gql`
     postID: ID
   }
 
+  type Token {
+    token: String
+  }
+
   type Query {
     books: [Book]
-    getPost: [Post]
+    getPost: [Post] @AuthDirective
   }
 
   input PostInput {
@@ -35,10 +46,20 @@ const typesDefs = gql`
     postID: ID
   }
 
+  input UserInput {
+    name: String,
+    lastname: String,
+    email: String,
+    password: String,
+    gender: Gender
+  }
+
   type Mutation {
     addPost(data: PostInput) : Post
     addCommentToPost(data: CommentInput) : Comment
     updatePost(data: PostInput, postID: ID) : Post
+    addUser(data: UserInput) : Token,
+    doLogin(email: String, password: String) : Token
   }
 `
 export default typesDefs

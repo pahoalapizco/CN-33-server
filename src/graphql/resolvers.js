@@ -1,5 +1,7 @@
 import { createPost, getPost, updatePost } from '../actions/postActions';
 import { addCommentToPost } from '../actions/commentActions'
+import { addUser, doLogin } from '../actions/userAction'
+
 const books = [
   {
     "title": "Harry Potter and the chamber of secrets",
@@ -26,6 +28,20 @@ const resolvers = {
         const filter = { _id: postID } 
         const update = { $set: { ...data } }
         return await updatePost(filter, update)
+      } catch (error) {
+        return error
+      }
+    },
+    addUser: async (parent, { data }) => {
+      try {
+        return await addUser(data)
+      } catch (error) {
+        return error
+      }
+    },
+    doLogin: async (parent, { email, password }) => {
+      try {
+        return await doLogin(email, password)
       } catch (error) {
         return error
       }
