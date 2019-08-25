@@ -1,5 +1,6 @@
 import { userModel } from '../database/models'
 import jwt from 'jsonwebtoken'
+import bcrypt from 'bcrypt'
 
 // Agregamos 
 Date.prototype.addDate = function(days) {
@@ -31,8 +32,10 @@ const addUser = async (userData) => {
 
 const doLogin = async (email, pass) => {
   try {
-    const login =  await userModel.findOne({email})
-    return createToken(login)
+    const user = await userModel.findOne({ email })
+    if (!user || !bcrypt.compareSync(pass, user.password)) { return null }
+
+    return createToken(user)
   } catch (error) {
     return error
   }
