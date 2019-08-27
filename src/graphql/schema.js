@@ -9,26 +9,34 @@ const typesDefs = gql`
   }
 
   type Book {
-    title: String,
+    title: String
     author: String
   }
 
   type Post {
-    _id: ID,
-    title: String,
-    content: String,
+    _id: ID
+    title: String
+    content: String
     likes: Int
     comments: [Comment]
   }
 
   type Comment {
-    _id: ID,
-    content: String,
+    _id: ID
+    content: String
     postID: ID
   }
 
   type Token {
     token: String
+  }
+
+  type User {
+    name: String
+    lastname: String
+    email: String
+    gender: Gender
+    profileImage: String
   }
 
   type Query {
@@ -37,29 +45,30 @@ const typesDefs = gql`
   }
 
   input PostInput {
-    title: String,
+    title: String
     content: String
   }
 
   input CommentInput {
-    content: String!,
+    content: String!
     postID: ID
   }
 
   input UserInput {
-    name: String,
-    lastname: String,
-    email: String,
-    password: String,
+    name: String
+    lastname: String
+    email: String
+    password: String
     gender: Gender
+    profileImage: Upload
   }
 
   type Mutation {
     addPost(data: PostInput) : Post
     addCommentToPost(data: CommentInput) : Comment
     updatePost(data: PostInput, postID: ID) : Post
-    addUser(data: UserInput) : Token,
+    addUser(data: UserInput!) : Token,
     doLogin(email: String, password: String) : Token
-  }
+  } 
 `
 export default typesDefs

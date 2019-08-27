@@ -1,6 +1,7 @@
 import { createPost, getPost, updatePost } from '../actions/postActions';
 import { addCommentToPost } from '../actions/commentActions'
 import { addUser, doLogin } from '../actions/userAction'
+import { storeUpload } from '../utils'
 
 const books = [
   {
@@ -34,7 +35,14 @@ const resolvers = {
     },
     addUser: async (parent, { data }) => {
       try {
-        return await addUser(data)
+        const { createReadStream } = await data.profileImage
+        const stream = createReadStream()
+        const { url } = await storeUpload(stream)
+        const newUserInfo = {
+          ...data,
+          profileImage: url
+        }
+        return await addUser(newUserInfo)
       } catch (error) {
         return error
       }

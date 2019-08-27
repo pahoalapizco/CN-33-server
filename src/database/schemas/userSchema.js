@@ -29,7 +29,10 @@ const userSchema = new Schema({
   post: [{
     type: Schema.Types.ObjectId,
     ref: 'posts'
-  }]
+  }],
+  profileImage: {
+    type: String
+  }
 }, { timestamps: true })
 
 mongoose.Types.ObjectId.prototype.valueOf = function () {
