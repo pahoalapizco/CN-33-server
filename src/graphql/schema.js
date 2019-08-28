@@ -68,7 +68,7 @@ const typesDefs = gql`
   }
 
   type Mutation {
-    addPost(data: PostInput) : Post
+    addPost(data: PostInput) : Post @AuthDirective
     addCommentToPost(data: CommentInput) : Comment
     updatePost(data: PostInput, postID: ID) : Post
     addUser(data: UserInput!) : Token,

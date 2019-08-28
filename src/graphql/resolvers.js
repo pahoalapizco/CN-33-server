@@ -2,10 +2,11 @@ import { createPost, getPost, updatePost } from '../actions/postActions';
 import { addCommentToPost } from '../actions/commentActions'
 import { addUser, doLogin, updateUser } from '../actions/userAction'
 import { storeUpload } from '../utils'
-import { PubSub } from 'apollo-server';
 
-const pubSub = new PubSub;
-const POST_ADDED = 'POST_ADDED';
+import { PubSub } from 'apollo-server'
+
+const pubSub = new PubSub
+const POST_ADDED = 'POST_ADDED'
 
 const books = [
   {
