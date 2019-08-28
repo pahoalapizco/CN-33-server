@@ -49,8 +49,17 @@ const findUser = async (filter) => {
   }
 }
 
+export const updateUser = async (filter, update) => {
+  try {
+    return await userModel.findOneAndUpdate(filter, update, { new: true })
+  } catch (error) {
+    return error
+  }
+}
+
 module.exports = {
   addUser,
   doLogin,
-  findUser
+  findUser,
+  updateUser
 }

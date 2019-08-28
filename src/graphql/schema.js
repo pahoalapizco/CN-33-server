@@ -63,6 +63,10 @@ const typesDefs = gql`
     profileImage: Upload
   }
 
+  type Subscription {
+    postAdded: Post
+  }
+
   type Mutation {
     addPost(data: PostInput) : Post
     addCommentToPost(data: CommentInput) : Comment

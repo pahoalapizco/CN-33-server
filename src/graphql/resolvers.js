@@ -1,7 +1,11 @@
 import { createPost, getPost, updatePost } from '../actions/postActions';
 import { addCommentToPost } from '../actions/commentActions'
-import { addUser, doLogin } from '../actions/userAction'
+import { addUser, doLogin, updateUser } from '../actions/userAction'
 import { storeUpload } from '../utils'
+import { PubSub } from 'apollo-server';
+
+const pubSub = new PubSub;
+const POST_ADDED = 'POST_ADDED';
 
 const books = [
   {
@@ -11,6 +15,11 @@ const books = [
 ]
 
 const resolvers = {
+  Subscription: {
+    postAdded: {
+      subscribe: (parent, args, context, info) => pubSub.asyncIterator([POST_ADDED])
+    },
+  },
   Query: {
     books: () => books,
     getPost: async (parent, args, context, info) => {
@@ -22,7 +31,17 @@ const resolvers = {
     } 
   },
   Mutation: {
-    addPost: async (parent, args, context, info) => await createPost(args.data),
+    addPost: async (parent, { data }, { user }, info) => {
+      console.log("TCL: user", user)
+      const newPost = await createPost(data);
+      const filter = { _id: user._id };
+      const update = { $push: { 'post': newPost._id } };
+      await (updateUser(filter, update));
+      pubSub.publish(
+        POST_ADDED,
+        { postAdded: newPost });
+      return newPost;
+    },
     addCommentToPost: async (parent, { data }, context, info) => await addCommentToPost(data),
     updatePost: async (parent, { data, postID }, context, info) => {
       try {
