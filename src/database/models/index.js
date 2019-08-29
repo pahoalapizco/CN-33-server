@@ -1,6 +1,6 @@
 'use stric'
 
-import mongoose  from 'mongoose'
+import mongoose from 'mongoose'
 import userSchema from '../schemas/userSchema'
 import postSchema from '../schemas/postSchema'
 import comentSchema from '../schemas/commentSchema'

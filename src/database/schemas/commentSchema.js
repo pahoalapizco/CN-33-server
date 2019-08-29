@@ -5,7 +5,7 @@ const comentSchema = new Schema({
   content: {
     type: String,
     required: true
-  },  
+  },
   postID: {
     type: Schema.Types.ObjectId,
     required: true,

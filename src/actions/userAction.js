@@ -2,8 +2,8 @@ import { userModel } from '../database/models'
 import jwt from 'jsonwebtoken'
 import bcrypt from 'bcrypt'
 
-// Agregamos 
-Date.prototype.addDate = function(days) {
+// Agregamos
+Date.prototype.addDate = function (days) {
   const date = new Date(this.valueOf())
   date.setDate(date.getDate() + days)
   return date

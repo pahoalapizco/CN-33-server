@@ -1,17 +1,17 @@
 import { postModel } from '../database/models'
 
 export const createPost = async (postData) => {
-  try{
+  try {
     return await postModel.create(postData)
-  } catch(error){
+  } catch (error) {
     return null
   }
 }
 
 export const getPost = async () => {
   try {
-    return  await postModel.find().populate('comments')
-  } catch(error){
+    return await postModel.find().populate('comments')
+  } catch (error) {
     return null
   }
 }
