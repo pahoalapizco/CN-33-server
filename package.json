@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "test": "jest",
     "start": "node ./build/index.js",
     "start:dev": "nodemon --exec babel-node --watch src ./src/index.js",
     "lint": "standard",
@@ -11,15 +12,26 @@
     "build:server": "babel -d ./build ./src -s",
     "build": "npm run clean && npm run build:server"
   },
+  "jest": {
+    "collectCoverage": true,
+    "collectCoverageFrom": [
+      "src/**/*.{js,jsx}"
+    ],
+    "setupFilesAfterEnv": [
+      "./jestSetup"
+    ]
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@babel/runtime": "^7.5.5",
     "apollo-server": "^2.8.2",
     "apollo-server-express": "^2.9.0",
     "bcrypt": "^3.0.6",
     "cloudinary": "^1.14.0",
     "graphql": "^14.4.2",
+    "isomorphic-fetch": "^2.2.1",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.6.10"
   },
@@ -29,9 +41,10 @@
     "@babel/node": "^7.5.5",
     "@babel/plugin-transform-runtime": "^7.5.5",
     "@babel/preset-env": "^7.5.5",
-    "@babel/runtime": "^7.5.5",
+    "chai": "^4.2.0",
     "dotenv": "^8.1.0",
+    "jest": "^24.9.0",
     "nodemon": "^1.19.1",
-    "standard": "^14.0.0"
+    "request": "^2.88.0"
   }
 }

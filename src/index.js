@@ -8,7 +8,10 @@ import resolvers from './graphql/resolvers'
 
 import { getContext, AuthDirective } from './actions/authActions' 
 
-mongoose.connect(process.env.DATABASE, {
+const DATA_BASE = process.env.ENV === 'test' ? process.env.TESTDATABASE : process.env.DATABASE
+
+
+mongoose.connect(DATA_BASE, {
   useCreateIndex: true,
   useNewUrlParser: true,
   useFindAndModify: false

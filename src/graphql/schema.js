@@ -60,7 +60,7 @@ const typesDefs = gql`
     email: String
     password: String
     gender: Gender
-    profileImage: Upload
+    profileImage: String
   }
 
   type Subscription {
@@ -71,7 +71,7 @@ const typesDefs = gql`
     addPost(data: PostInput) : Post @AuthDirective
     addCommentToPost(data: CommentInput) : Comment
     updatePost(data: PostInput, postID: ID) : Post
-    addUser(data: UserInput!) : Token,
+    addUser(data: UserInput!) : Token
     doLogin(email: String, password: String) : Token
   } 
 `

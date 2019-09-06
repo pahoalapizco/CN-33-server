@@ -27,13 +27,12 @@ const resolvers = {
       try {
         return await getPost()
       } catch (error) {
-        return null
+        return error
       }
     }
   },
   Mutation: {
     addPost: async (parent, { data }, { user }, info) => {
-      console.log('TCL: user', user)
       const newPost = await createPost(data)
       const filter = { _id: user._id }
       const update = { $push: { post: newPost._id } }
@@ -55,13 +54,20 @@ const resolvers = {
     },
     addUser: async (parent, { data }) => {
       try {
-        const { createReadStream } = await data.profileImage
-        const stream = createReadStream()
-        const { url } = await storeUpload(stream)
-        const newUserInfo = {
-          ...data,
-          profileImage: url
+        let newUserInfo
+        if(data.profileImage)
+        {
+          const { createReadStream } = await data.profileImage
+          const stream = createReadStream()
+          const { url } = await storeUpload(stream)
+          newUserInfo = {
+            ...data,
+            profileImage: url
+          }
+        } else { 
+          newUserInfo = data
         }
+        
         return await addUser(newUserInfo)
       } catch (error) {
         return error
